@@ -117,10 +117,10 @@ function Login() {
             <label htmlFor="email" className="text-dark">
               email
             </label>
-            {errors.username?.type === "required" && (
+            {errors.email?.type === "required" && (
               <p className=" text-danger">*enter your email</p>
             )}
-            {errors.username?.type === "minLength" && (
+            {errors.email?.type === "minLength" && (
               <p className=" text-danger">
                 *minimum 4 letter word is required
               </p>
