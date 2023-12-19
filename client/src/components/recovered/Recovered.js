@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-export default function Recovered() {
+const Recovered = () => {
   return (
     <div>
       <section class="h-screen">
@@ -29,6 +29,7 @@ export default function Recovered() {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
 }
+
+export default Recovered

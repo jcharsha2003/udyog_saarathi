@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
-import { RecoveryContext } from "../App";
-
-export default function () {
+import { RecoveryContext } from "../../App";
+import axios from "axios";
+const OTPInput = () => {
   const { email, otp, setPage } = useContext(RecoveryContext);
   const [timerCount, setTimer] = React.useState(60);
   const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
@@ -166,3 +166,5 @@ export default function () {
     </div>
   );
 }
+
+export default OTPInput

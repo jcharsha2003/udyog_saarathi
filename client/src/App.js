@@ -28,7 +28,7 @@ import OTPInput from "./components/otpInput/OTPInput";
 import Recovered from "./components/recovered/Recovered";
 import Reset from "./components/reset/Reset";
 import { createContext } from "react";
-
+export const RecoveryContext = createContext();
 function App() {
   const [page, setPage] = useState("login");
   const [email, setEmail] = useState();
@@ -142,7 +142,10 @@ function App() {
   ]);
   return (
     <div className="App">
+      <RecoveryContext.provider  value={{ page, setPage, otp, setOTP, setEmail, email }}>
       <RouterProvider router={routerObj} />
+      </RecoveryContext.provider>
+      
     </div>
   );
 }
