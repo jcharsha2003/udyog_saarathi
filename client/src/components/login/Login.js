@@ -18,7 +18,7 @@ function Login() {
     const { name, value } = e.target;
   
       setValue(name, value); // Update the form value using setValue
-      console.log(name)
+     
   };
  
 
