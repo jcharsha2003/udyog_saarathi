@@ -12,6 +12,7 @@ import Private from "./components/private/Private";
 import Courses from "./components/courses/Courses";
 import Products from "./components/products/Products";
 import MockTests from "./components/mocktests/MockTests";
+import UpscMock from "./components/upscmock/UpscMock";
 import Upsc from "./components/upsc/Upsc";
 import Banking from "./components/banking/Banking";
 import Railway from "./components/railway/Railway";
@@ -26,7 +27,9 @@ import Forgot from "./components/forgot/Forgot";
 import UserProfile from "./components/userprofile/UserProfile";
 import OTPInput from "./components/otpInput/OTPInput";
 import Recovered from "./components/recovered/Recovered";
+import ScreenReader from "./screenReader/ScreenReader";
 import Reset from "./components/reset/Reset";
+import PaidCourses from "./components/paidCourses/PaidCourses";
 import { createContext } from "react";
 export const RecoveryContext = createContext();
 function App() {
@@ -76,6 +79,11 @@ function App() {
 
         },
         {
+          path: "/screenreader",
+          element: <ScreenReader />,
+        
+        },
+        {
           path: "/",
           element: <Products />,
         
@@ -87,6 +95,10 @@ function App() {
             {
               path: "law",
               element: <Law />,
+            },
+            {
+              path: "upscmock",
+              element: <UpscMock />,
             },
           ]
        
@@ -110,6 +122,10 @@ function App() {
         },{
           path: "/software-development",
           element: <SoftwareDevelopment />,
+        },
+        {
+          path: "/paidcourses",
+          element: <PaidCourses />,
         },
         {
           path: "/about",

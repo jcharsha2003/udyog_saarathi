@@ -7,7 +7,9 @@ import { FaWheelchair, FaHome, FaSignInAlt, FaSignOutAlt, FaUser, FaFileAlt, FaB
 import { GiSpeaker } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { RiUserSearchFill } from "react-icons/ri";
-import logo from "../../images/logo.png"
+import logo from "../../images/logo.jpeg"
+import PaidCourses from "../paidCourses/PaidCourses";
+import "./NavbarMain.css"
 
 const visuallyHidden = {
   position: 'absolute',
@@ -45,22 +47,23 @@ const NavbarMain = (props) => {
   return (
     <Navbar expand="lg" className="p-0 body">
       <div className="container-fluid px-3 body1">
+        
         <div className="flex">
-          <Link className="nav-link text-black" to="/">
+          <Link className="nav-link text-black fs-3 mx-2" to="/">
             <img
               src={logo}
-              width="55px"
-              height="55px"
+              width="80px"
+              height="80px"
               alt="image"
-            ></img>
+            ></img>{"  "}
             Udyog Saarathi
           </Link>
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto" type="button">
+          <Nav className="ms-auto" >
             <Dropdown className="mt-3 mx-2 ms-auto" style={dropdownStyle}>
-              <Dropdown.Toggle variant="success" id="dropdown-basic"  aria-expanded={false} >
+              <Dropdown.Toggle variant="success" id="dropdown-basic"  >
               <span style={visuallyHidden}>Accessibility Options</span>
                 <i className="fas fa-wheelchair"></i>
               </Dropdown.Toggle>
@@ -70,7 +73,7 @@ const NavbarMain = (props) => {
                   <button
                     onClick={props.increaseFontSize}
                     className="btn d-block m-auto w-100 fs-5 text-dark"
-                    type="button"
+                    
                     aria-label="Increase Font Size"
                   >
                     +A
@@ -80,7 +83,7 @@ const NavbarMain = (props) => {
                 <button
                   onClick={props.decreaseFontSize}
                   className="btn d-block m-auto w-100 fs-5 text-dark"
-                  type="button"
+                  
                   aria-label="Decrease Font Size"
                 >
                   -A
@@ -90,28 +93,28 @@ const NavbarMain = (props) => {
                 <Dropdown.Divider />
                 <Dropdown.Item
                   className="d-block w-75 m-auto p-3"
-                  type="button"
+                  
                   style={{ backgroundColor: "#E50203" }}
                   onClick={() => props.changeColor("#E50203")}
                 ></Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
                   className="d-block w-75 m-auto p-3"
-                  type="button"
+                  
                   style={{ backgroundColor: "#AA9403" }}
                   onClick={() => props.changeColor("#AA9403")}
                 ></Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
                   className="d-block w-75 m-auto p-3"
-                  type="button"
+                  
                   style={{ backgroundColor: "#FF005B" }}
                   onClick={() => props.changeColor("#FF005B")}
                 ></Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
                   className="d-block w-75 m-auto p-3"
-                  type="button"
+                  
                   style={{ backgroundColor: "#FEED00" }}
                   onClick={() => props.changeColor("#FEED00")}
                 ></Dropdown.Item>
@@ -119,7 +122,7 @@ const NavbarMain = (props) => {
                 <Dropdown.Divider />
                 <Dropdown.Item
                   className="text-center"
-                  type="button"
+                  
                   onClick={props.resetColor}
                 >
                     Reset Color
@@ -128,21 +131,22 @@ const NavbarMain = (props) => {
             </Dropdown>
 
             <li className="nav-item dropdown">
-              <button
-                onClick={downloadNVDA}
-                className="nav-link"
-                style={{
-                  padding: "1.3rem",
-                  border: "none",
-                  background: "none",
-                }}
-                aria-label="Download NVDA"
-              >
- <span style={visuallyHidden}>Download NVDA</span>
-                 <GiSpeaker />
-                Screen reader access
-              </button>
-            </li>
+                  {/* Make the screen reader access a link */}
+                  <Link
+                    to="/screenReader"  // Redirect to "/screenReader" on click
+                    className="nav-link"
+                    style={{
+                      padding: "1.3rem",
+                      border: "none",
+                      background: "none",
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <FaVolumeUp style={{ marginRight: '5px' }} />
+                    Screen reader access
+                  </Link>
+                </li>
 
             {!userLoginStatus ? (
               <ul className="navbar-nav menu ms-auto text-decoration-none">

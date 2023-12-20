@@ -1,36 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import { loginContext } from "../../context/loginContext";
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import annyang from "annyang";
-import axios from "axios";
-import { RecoveryContext } from "../../App";
 
 import "./Login.css";
 
 function Login() {
   let navigate = useNavigate();
-  const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
-
-  function nagigateToOtp() {
-    console.log(email)
-    if (email) {
-      const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
-      setOTP(OTP);
-
-      axios
-        .post("/send_recovery_email", {
-          OTP,
-          recipient_email: email,
-        })
-        .then(() => navigate("/otp"))
-        .catch(console.log);
-      return;
-    }
-    return alert("Please enter your email");
-  }
- 
   let {
     register,
     handleSubmit,
@@ -42,7 +19,7 @@ function Login() {
 
   let handleUserLogin = (userobj) => {
     loginUser(userobj);
-    console.log("succesfull login ")
+    console.log("successful login ");
   };
 
   useEffect(() => {
@@ -59,42 +36,7 @@ function Login() {
     };
     if (annyang) {
       const commands = {
-        "Write e-mail *tag": (variable) => {
-          document.getElementById("email").focus();
-          document.getElementById("email").value += variable;
-          updateEmailField(variable);
-        },
-
-        "Right email *tag": (variable) => {
-          document.getElementById("email").focus();
-          document.getElementById("email").value += variable;
-          updateEmailField(variable);
-        },
-
-        "E-mail *tag": (variable) => {
-          document.getElementById("email").focus();
-          document.getElementById("email").value += variable;
-          updateEmailField(variable);
-        },
-
-        "e-mail *tag": (variable) => {
-          document.getElementById("email").focus();
-          document.getElementById("email").value += variable;
-          updateEmailField(variable);
-        },
-
-        "write email *tag": (variable) => {
-          document.getElementById("email").focus();
-          document.getElementById("email").value += variable;
-          updateEmailField(variable);
-        },
-        "write password *tag": (variable) => {
-          document.getElementById("password").focus();
-          document.getElementById("password").value += variable;
-        },
-        submit: () => {
-          document.getElementById("submit-button").click();
-        },
+        // ... existing voice commands
       };
 
       annyang.debug();
@@ -114,41 +56,31 @@ function Login() {
 
   return (
     <div className="Login container">
-      {error?.length !== 0 && (
-        <p className="text-danger display-1"> {error}</p>
-      )}
+      {error?.length !== 0 && <p className="text-danger display-1"> {error}</p>}
 
-      <div className="cat m-auto  shadow-lg  rounded">
+      <div className="cat m-auto shadow-lg rounded">
         <h2 className="title">Login</h2>
-        <form
-          id="loginForm"
-          onSubmit={handleSubmit(handleUserLogin)}
-          action=""
-        >
+        <form id="loginForm" onSubmit={handleSubmit(handleUserLogin)} action="">
           <div className="inputbox form-floating">
             <i className="fa-regular fa-user"></i>
             <input
               type="email"
               id="email"
               className="form-control "
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              // {...register("email", {
-              //   required: true,
-              //   minLength: 4,
-              // })}
+              {...register("email", {
+                required: true,
+                minLength: 4,
+              })}
               placeholder="xyz"
             ></input>
             <label htmlFor="email" className="text-dark">
               email
             </label>
-            {errors.email?.type === "required" && (
+            {errors.username?.type === "required" && (
               <p className=" text-danger">*enter your email</p>
             )}
-            {errors.email?.type === "minLength" && (
-              <p className=" text-danger">
-                *minimum 4 letter word is required
-              </p>
+            {errors.username?.type === "minLength" && (
+              <p className=" text-danger">*minimum 4 letter word is required</p>
             )}
           </div>
 
@@ -169,21 +101,11 @@ function Login() {
               <p className=" text-danger">*enter your password</p>
             )}
             {errors.password?.type === "minLength" && (
-              <p className=" text-danger">
-                *minimum 4 password word is required
-              </p>
+              <p className=" text-danger">*minimum 4 password word is required</p>
             )}
           </div>
-          <a
-                    href="#"
-                    onClick={() => nagigateToOtp()}
-                    className="text-gray-800"
-                  >
-                    Forgot password?
-                  </a>
-
-          <button type="submit" id="submit-button"
-          className="button-l d-block m-auto mt-5">
+               <a>forgot your password?</a>
+          <button type="submit" id="submit-button" className="button-l d-block m-auto mt-5">
             Login
           </button>
         </form>
@@ -193,3 +115,24 @@ function Login() {
 }
 
 export default Login;
+
+// _id
+// ObjectId('657dab9b0e316976d498bd87')
+// img
+// "https://firebasestorage.googleapis.com/v0/b/udyog-sarathi.appspot.com/…"
+// organisation
+// "India Exim Bank-Mumbai"
+// post
+// "Manager, Management Trainee"
+// method
+// "Regular"
+// lastDate
+// "01-01-2024"
+// link
+// "https://www.eximbankindia.in/Assets/pdf/careers/Advertisement_for_Exim…"
+// role
+// "public"
+// vacancies
+// "3"
+// appLink
+// "https://ibpsonline.ibps.in/iebmtsep22/"
