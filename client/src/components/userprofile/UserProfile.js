@@ -187,7 +187,7 @@ const UserProfile = () => {
                     })}
                   ></input>
                   <label htmlFor="username" className="text-dark">
-                    Full Name
+                    User Name
                   </label>
 
                   {errors.username?.type === "required" && (

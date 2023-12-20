@@ -3,6 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { loginContext } from "../../context/loginContext";
+<<<<<<< HEAD
 import { FaWheelchair, FaHome, FaSignInAlt, FaSignOutAlt, FaUser, FaFileAlt, FaBookReader, FaVolumeUp, FaUsers } from 'react-icons/fa';
 import { GiSpeaker } from "react-icons/gi";
 import { Link } from "react-router-dom";
@@ -10,6 +11,13 @@ import { RiUserSearchFill } from "react-icons/ri";
 import logo from "../../images/logo.jpeg"
 import PaidCourses from "../paidCourses/PaidCourses";
 import "./NavbarMain.css"
+=======
+import "./NavbarMain.css";
+import { Link } from "react-router-dom";
+function NavbarMain(props) {
+  let [currentUser, error, userLoginStatus, loginUser, logoutUser, role] =
+    useContext(loginContext);
+>>>>>>> parent of 65d6e65 (0.2.2v)
 
 const visuallyHidden = {
   position: 'absolute',
@@ -129,8 +137,10 @@ const NavbarMain = (props) => {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-
-            <li className="nav-item dropdown">
+            <ul className="navbar-nav menu ms-auto text-decoration-none">
+              {!userLoginStatus ? (
+                <ul className="navbar-nav menu ms-auto text-decoration-none">
+                   <li className="nav-item dropdown">
                   {/* Make the screen reader access a link */}
                   <Link
                     to="/screenReader"  // Redirect to "/screenReader" on click
@@ -147,134 +157,146 @@ const NavbarMain = (props) => {
                     Screen reader access
                   </Link>
                 </li>
+                  <li className="nav-item active">
+                    <Link
+                      className="nav-link  "
+                      style={{ padding: "1.3rem" }}
+                      to="/"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link   "
+                      style={{ padding: "1.3rem" }}
+                      to="/login"
+                    >
+                      Sign in
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/register"
+                    >
+                      Sign up
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul className="navbar-nav menu ms-auto text-decoration-none">
+                 <li className="nav-item dropdown">
+                  {/* Make the screen reader access a link */}
+                  <Link
+                    to="/screenReader"  // Redirect to "/screenReader" on click
+                    className="nav-link"
+                    style={{
+                      padding: "1.3rem",
+                      border: "none",
+                      background: "none",
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <FaVolumeUp style={{ marginRight: '5px' }} />
+                    Screen reader access
+                  </Link>
+                </li>
+                  <li className="nav-item active">
+                    <Link
+                      className="nav-link  "
+                      style={{ padding: "1.3rem" }}
+                      to="/"
+                    >
+                      Home
+                    </Link>
+                  </li>
 
-            {!userLoginStatus ? (
-              <ul className="navbar-nav menu ms-auto text-decoration-none">
-                
-                <li className="nav-item active">
-                  <Link
-                    className="nav-link  "
-                    style={{ padding: "1.3rem" }}
-                    to="/"
-                  >
-                    <FaHome /> Home
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link   "
-                    style={{ padding: "1.3rem" }}
-                    to="/login"
-                  >
-                    <FaSignInAlt /> Sign in
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/register"
-                  >
-                    <FaSignOutAlt /> Sign up
-                  </Link>
-                </li>
-              </ul>
-            ) : (
-              <ul className="navbar-nav menu ms-auto text-decoration-none">
-                
-                <li className="nav-item active">
-                  <Link
-                    className="nav-link  "
-                    style={{ padding: "1.3rem" }}
-                    to="/"
-                  >
-                    <FaHome /> Home
-                  </Link>
-                </li>
-
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/jobs/public"
-                  >
-                    <FaFileAlt /> Jobs
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/coursespage"
-                  >
-                    <FaBookReader /> Courses
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/mockTestCard"
-                  >
-                    <FaFileAlt /> Tests
-                  </Link>
-                </li>
-              </ul>
-            )}
-            {userLoginStatus && role === "admin" && (
-              <ul className="navbar-nav menu ms-auto text-decoration-none">
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/users"
-                  >
-                    <FaUsers />
-                    Users
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/login"
-                    onClick={logoutUser}
-                  >
-                    <FaSignOutAlt />
-                    Sign Out
-                  </Link>
-                </li>
-              </ul>
-            )}
-            {userLoginStatus && role === "employee" && (
-              <ul className="navbar-nav menu ms-auto text-decoration-none">
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/user-profile"
-                  >
-                    <RiUserSearchFill />
-                    User Profile
-                  </Link>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link "
-                    style={{ padding: "1.3rem" }}
-                    to="/login"
-                    onClick={logoutUser}
-                  >
-                    <FaSignOutAlt />
-                    Sign Out
-                  </Link>
-                </li>
-              </ul>
-            )}
-
-            <li className="nav-item active">
-              {/* <div id="google_translate_element"></div> */}
-            </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/jobs/public"
+                    >
+                      Jobs
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/coursespage"
+                    >
+                      Courses
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/mockTestCard"
+                    >
+                      Tests
+                    </Link>
+                  </li>
+               
+                 
+                </ul>
+              )}
+              {userLoginStatus && role == "admin" && 
+                <ul className="navbar-nav menu ms-auto text-decoration-none">
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/users"
+                    >
+                      Users
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/login"
+                      onClick={logoutUser}
+                    >
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              }
+                            {userLoginStatus && role == "employee" && 
+                <ul className="navbar-nav menu ms-auto text-decoration-none">
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/user-profile"
+                    >
+                      User Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/login"
+                      onClick={logoutUser}
+                    >
+                      Sign Out
+                    </Link>
+                  </li>
+                  
+                </ul>
+              }
+              
+              <li className="nav-item active">
+                {/* <div id="google_translate_element"></div> */}
+              </li>
+            </ul>
           </Nav>
         </Navbar.Collapse>
       </div>

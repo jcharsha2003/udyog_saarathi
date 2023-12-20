@@ -73,7 +73,6 @@ const Public = () => {
     lastDate: "",
     vacancies: "",
     link: "",
-    appLink:"",
     role: "public",
     
   });
@@ -124,7 +123,6 @@ const Public = () => {
     method: formData.method,
     lastDate: formData.lastDate,
     vacancies:Number(formData.vacancies) ,
-    appLink:formData.appLink,
     link: formData.link,
     role: formData.role,
     
@@ -240,11 +238,8 @@ const Public = () => {
         </StyledRatingContainer>
       </StyledPost>
     </RatingContext.Provider>
-                      <a className="btn btn-success m-2" href={job.link}>
+                      <a className="btn btn-success mx-2" href={job.link}>
                         Get Details
-                      </a>
-                      <a className="btn btn-danger m-2" href={job.appLink}>
-                        Apply link
                       </a>
                     </div>
                     <small className="text-truncate">
@@ -376,21 +371,6 @@ const Public = () => {
               ></input>
               <label htmlFor="link" className="text-dark">
                 Details Doc Link
-              </label>
-            </div>
-            <div className="inputbox2 form-floating">
-              <i className="fa-solid fa-link"></i>
-              <input
-                type="text"
-                id="appLink"
-                className="form-control "
-                placeholder="xyz"
-                name="appLink"
-                value={formData.appLink}
-                onChange={handleChange}
-              ></input>
-              <label htmlFor="appLink" className="text-dark">
-                Apply Link
               </label>
             </div>
 

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React from "react";
 import "./App.css";
 import Register from "./components/register/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -23,7 +23,7 @@ import About from "./components/about/About"
 import CoursesPage from "./components/coursesPage/CoursesPage";
 import MockTestCard from "./components/mockTestCard/MockTestCard";
 import Users from "./components/users/Users"
-import Forgot from "./components/forgot/Forgot";
+
 import UserProfile from "./components/userprofile/UserProfile";
 import OTPInput from "./components/otpInput/OTPInput";
 import Recovered from "./components/recovered/Recovered";
