@@ -1,114 +1,136 @@
-import React from "react";
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState,useEffect, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { RecoveryContext } from "../../App";
+
 const Reset = () => {
+  const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
   const navigate = useNavigate();
   const {
+    register,
     handleSubmit,
-    control,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm();
-  // function changePassword() {
-  //   navigate("/login");
-    
-  // }
-  const changePassword = (data) => {
-    // Implement your logic for password change here
-    // The form data is available in the `data` object
-    console.log('Form Data:', data);
 
-    // Add your logic for password change or API call here
+  const watchedPassword = watch("password", "");
+
+  const handleInputChange = (e) => {
+    setValue(e.target.name, e.target.value);
+  };
+
+  const changePassword = async (data) => {
+    console.log(email)
+    // Simulate API call to change password
+    try {
+      // Replace the following line with your actual API call
+      const response = await axios.put("/user-api/change-password", {
+        email: {email}, // Replace with actual user email
+        newPassword: data.password,
+      });
+
+      // Handle API response here
+      console.log("API Response:", response.data);
+
+      // Redirect or perform other actions after successful password change
+      navigate("/login");
+    } catch (error) {
+      // Handle API error here
+      console.error("API Error:", error.message);
+    }
   };
 
   return (
     <div>
-      <section class="bg-gray-50 w-screen">
-  <div class="d-flex flex-column align-items-center justify-content-center px-3 py-4 mx-auto h-100">
-    <div class="w-full p-4 bg-white rounded-lg shadow-md border md:mt-0 sm:max-w-md">
-      <h2 class="mb-1 text-xl font-bold leading-tight text-gray-900">
-        Change Password
-      </h2>
-      <form onSubmit={handleSubmit(changePassword)} className="mt-4 space-y-4">
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label text-sm font-medium text-gray-900">
-          New Password
-        </label>
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-              required
-              {...field}
-            />
-          )}
-          rules={{ required: 'New password is required' }}
-        />
-        {errors.password && <p className="text-danger">{errors.password.message}</p>}
-      </div>
-      <div className="mb-3">
-        <label htmlFor="confirm-password" className="form-label text-sm font-medium text-gray-900">
-          Confirm password
-        </label>
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({ field }) => (
-            <input
-              type="password"
-              id="confirm-password"
-              placeholder="••••••••"
-              className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-              required
-              {...field}
-            />
-          )}
-          rules={{
-            required: 'Confirm password is required',
-            validate: (value) => value === control.fieldsRef.current.password.value || 'Passwords do not match',
-          }}
-        />
-        {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
-      </div>
-      <div className="form-check mb-3">
-        <Controller
-          name="acceptTerms"
-          control={control}
-          render={({ field }) => (
-            <input
-              id="newsletter"
-              aria-describedby="newsletter"
-              type="checkbox"
-              className={`form-check-input ${errors.acceptTerms ? 'is-invalid' : ''}`}
-              required
-              {...field}
-            />
-          )}
-          rules={{ required: 'You must accept the terms and conditions' }}
-        />
-        <label htmlFor="newsletter" className="form-check-label text-sm text-gray-500">
-          I accept the{' '}
-          <a href="#" className="font-medium text-primary-600 hover-underline">
-            Terms and Conditions
-          </a>
-        </label>
-        {errors.acceptTerms && <p className="text-danger">{errors.acceptTerms.message}</p>}
-      </div>
-      <button type="submit" className="btn btn-primary w-100 rounded-lg text-sm px-4 py-2.5">
-        Reset Password
-      </button>
-    </form>
-    
-    </div>
-  </div>
-</section>
+      <section className="bg-gray-50 w-screen">
+        <div className="d-flex flex-column align-items-center justify-content-center px-3 py-4 mx-auto h-100">
+          <div className="w-full p-4 bg-white rounded-lg shadow-md border md:mt-0 sm:max-w-md">
+            <h2 className="mb-1 text-xl font-bold leading-tight text-gray-900">
+              Change Password
+            </h2>
+            <form
+              onSubmit={handleSubmit(changePassword)}
+              className="mt-4 space-y-4"
+            >
+              <div className="mb-3">
+                <div className="inputbox form-floating">
+                  <i className="fa-solid fa-lock"></i>
+                  <input
+                    type="password"
+                    id="password"
+                    className="form-control"
+                    name="password"
+                    onChange={handleInputChange}
+                    {...register("password", { required: true, minLength: 4 })}
+                    placeholder="xyz"
+                  />
+                  <label htmlFor="password" className="text-dark">
+                    Password
+                  </label>
+                  {errors.password && errors.password.type === "required" && (
+                    <p className="text-danger">* Enter your password</p>
+                  )}
+                  {errors.password && errors.password.type === "minLength" && (
+                    <p className="text-danger">
+                      * Minimum 4 characters password is required
+                    </p>
+                  )}
+                </div>
+              </div>
 
+              <div className="mb-3">
+                <div className="inputbox form-floating">
+                  <i className="fa-solid fa-lock"></i>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    className="form-control"
+                    name="confirmPassword"
+                    onChange={handleInputChange}
+                    {...register("confirmPassword", {
+                      required: true,
+                      minLength: 4,
+                      validate: (value) =>
+                        value === watchedPassword ||
+                        "Passwords do not match",
+                    })}
+                    placeholder="xyz"
+                  />
+                  <label htmlFor="confirmPassword" className="text-dark">
+                    Confirm Password
+                  </label>
+                  {errors.confirmPassword &&
+                    errors.confirmPassword.type === "required" && (
+                      <p className="text-danger">* Confirm your password</p>
+                    )}
+                  {errors.confirmPassword &&
+                    errors.confirmPassword.type === "minLength" && (
+                      <p className="text-danger">
+                        * Minimum 4 characters password is required
+                      </p>
+                    )}
+                  {errors.confirmPassword &&
+                    errors.confirmPassword.type === "validate" && (
+                      <p className="text-danger">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary w-100 rounded-lg text-sm px-4 py-2.5"
+              >
+                Reset Password
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
   );
-}
+};
 
-export default Reset
+export default Reset;

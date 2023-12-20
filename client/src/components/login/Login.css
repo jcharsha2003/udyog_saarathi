@@ -131,8 +131,3 @@
     opacity: 0;
   }
 }
-@media screen and (min-width: 480px) {
-  .cat {
-    transform: translateX(50%); /* Move the element to the right when the screen is at least 480 pixels wide */
-  }
-}

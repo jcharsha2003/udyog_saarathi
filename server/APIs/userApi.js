@@ -57,16 +57,21 @@ userapp.post(
 );
 
 userapp.put(
-  "/update-task/:email",
-  verifytoken,
+  "/user-api/change-password",
+  
   expressAsyncHandler(async (request, response) => {
+   
     // get userCollection
     const userCollection = request.app.get("userCollection");
-    let task = request.body;
+    let newUser = request.body;
+    let hashedPassword = await bcryptjs.hash(newUser.password, 6);
+    newUser.password = hashedPassword;
+    console.log( newUser )
     await userCollection.updateOne(
-      { email: request.params.email },
-      { $addToSet: { tasks: task } }
+      { email: newUser.email },
+      { password: newUser.password }
     );
+   
     response.status(200).send({ message: "task has been added successfully" });
   })
 );

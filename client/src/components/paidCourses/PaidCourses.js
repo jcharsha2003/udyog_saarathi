@@ -1,5 +1,4 @@
 import React from 'react';
-
 const courseData = [
   {
     image: 'https://st.adda247.com/https://storeimages.adda247.com/394311699260099.png?tr=w-undefined',
@@ -27,26 +26,31 @@ const courseData = [
   },
 ];
 
+
 function PaidCourses() {
   return (
     <div className="container mt-5">
-      <div className="row">
-        {courseData.map((course, index) => (
-          <div key={index} className="col-md-3 mb-4">
-            <div className="card">
-              <img src={course.image} className="card-img-top" alt={course.name} />
-              <div className="card-body">
-                <h5 className="card-title">{course.name}</h5>
-                <p className="card-text">{course.price}</p>
-                <a href={course.applyLink} className="btn btn-primary">
-                  Apply
-                </a>
-              </div>
+    <div className="row">
+      {courseData.map((course, index) => (
+        <div key={index} className="col-md-3 mb-4">
+          <div className="card">
+            <img src={course.image} className="card-img-top" alt={course.name} />
+            <div className="card-body">
+              <h5 className="card-title" style={{ color: 'red', fontSize: '1.25rem', fontWeight: 'bold' }}>
+                {course.name}
+              </h5>
+              <p className="card-text" style={{ color: 'green', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                {course.price}
+              </p>
+              <a href={course.applyLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                Apply
+              </a>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
+  </div>
   );
 }
 

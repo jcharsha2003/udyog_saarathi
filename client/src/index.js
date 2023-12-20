@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import UserLoginContextStore from "./context/UserLoginContextStore";
 import TopicContextProvider from "./context/TopicContextProvider";
 
-
+import ChatbotEmbed from "./components/chatbot/ChatbotEmbed";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,6 +17,7 @@ root.render(
     
     <TopicContextProvider>
       <App  />
+      <ChatbotEmbed/>
       </TopicContextProvider>
       
      

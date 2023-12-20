@@ -63,24 +63,31 @@ function Login() {
     }
   }, []);
  
-
-  function nagigateToOtp() {
-    if (watchedEmail) {
-      const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
-      setOTP(OTP);
-
-      axios
-        .post("/send_recovery_email", {
-          OTP,
-          recipient_email: watchedEmail,
-        })
-        .then(() => navigate("/otp"))
-        .catch(console.log);
+  const nagigateToOtp = () => {
+    // Check if watchedEmail is not provided
+    if (!watchedEmail) {
+      alert("Please enter your email");
       return;
     }
-    return alert("Please enter your email");
-  }
+
+    // Generate OTP and send recovery email
+    const OTP = Math.floor(Math.random() * 9000 + 1000);
+    console.log(OTP);
+    setOTP(OTP);
+    navigate("/otp");
+    setEmail(watchedEmail)
+    axios
+      .post("/send_recovery_email", {
+        OTP,
+        recipient_email: watchedEmail,
+      })
+      .then(() => {
+        // Navigate to "/otp"
+        navigate("/otp");
+      })
+      .catch(console.log);
+  };
+  
   
 
 
@@ -109,7 +116,7 @@ function Login() {
           <p className="text-danger">*enter your email</p>
         )}
         {errors.email && errors.email.type === "pattern" && (
-          <p className="text-danger">*enter a valid email address</p>
+          <p className="text-danger">*enter Link valid email address</p>
         )}
       </div>
 
@@ -136,9 +143,10 @@ function Login() {
       </div>
 
       <div>
-        <a href="#" onClick={() => nagigateToOtp()} className="text-gray-800">
-          Forgot password?
-        </a>
+      <Link  onClick={nagigateToOtp} className="text-gray-800">
+  Forgot password?
+</Link>
+
       </div>
       <button type="submit" id="submit-button" className="button-l d-block m-auto mt-5">
         Login

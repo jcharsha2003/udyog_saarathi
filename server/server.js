@@ -54,7 +54,9 @@ const courseapp = require("./APIs/courseApi");
 
 app.use("/user-api", userapp);
 app.use("/job-api", jobapp);
+
 app.use("/course-api", courseapp);
+userapp.use(exp.json());
 app.post("/send_recovery_email", (req, res) => {
   sendEmail(req.body)
     .then((response) => res.send(response.message))
