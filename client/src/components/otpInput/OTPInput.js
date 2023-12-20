@@ -2,16 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { RecoveryContext } from "../../App";
-<<<<<<< HEAD
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const OTPInput = () => {
   const navigate = useNavigate();
-=======
-import axios from "axios";
-const OTPInput = () => {
->>>>>>> af189c0c38ce2e368b62ba792a0b3d9409a5da1b
+
+
+
+
   const { email, otp, setPage } = useContext(RecoveryContext);
 
   const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
@@ -155,12 +155,11 @@ const OTPInput = () => {
       </div>
     </div>
   );
-<<<<<<< HEAD
+
 };
 
-export default OTPInput;
-=======
-}
+
+
+
 
 export default OTPInput
->>>>>>> af189c0c38ce2e368b62ba792a0b3d9409a5da1b
