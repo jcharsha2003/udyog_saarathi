@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { RiUserSearchFill } from "react-icons/ri";
 import logo from "../../images/logo.jpeg"
 import PaidCourses from "../paidCourses/PaidCourses";
+import GoogleTranslate from './GoogleTranslate';
 import "./NavbarMain.css"
 
 const visuallyHidden = {
@@ -326,7 +327,10 @@ const NavbarMain = (props) => {
               }
               
               <li className="nav-item active">
-                {/* <div id="google_translate_element"></div> */}
+              <div id="google_translate_element"></div>
+
+{/* Include Google Translate script */}
+<GoogleTranslate />
               </li>
             </ul>
           </Nav>
