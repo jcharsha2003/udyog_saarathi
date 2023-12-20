@@ -162,6 +162,7 @@ const Public = () => {
   useEffect(() => {
     getJobs();
   }, []);
+  const textOnlyRegex = /^[A-Za-z\s]+$/;
 
   return (
     <div className="container">
@@ -204,42 +205,54 @@ const Public = () => {
               {errors.img && <p className="text-danger">* Image is required</p>}
             </div>
 
-            <div className="inputbox2 form-floating">
-              <i className="fa-solid fa-sitemap"></i>
-              <input
-                type="text"
-                id="organisation"
-                name="organisation"
-                className="form-control "
-                placeholder="xyz"
-                {...register("organisation", { required: true })}
-                onChange={handleChange}
-              />
-              <label htmlFor="organisation" className="text-dark">
-                Organisation
-              </label>
-              {errors.organisation && (
-                <p className="text-danger">* Organisation is required</p>
-              )}
-            </div>
 
             <div className="inputbox2 form-floating">
-              <i className="fa-solid fa-signs-post"></i>
-              <input
-                type="text"
-                id="post"
-                name="post"
-                className="form-control "
-                placeholder="xyz"
-                {...register("post", { required: true })}
-                onChange={handleChange}
-              />
-              <label htmlFor="post" className="text-dark">
-                Post
-              </label>
-              {errors.post && <p className="text-danger">* Post is required</p>}
-            </div>
+        <i className="fa-solid fa-sitemap"></i>
+        <input
+          type="text"
+          id="organisation"
+          name="organisation"
+          className="form-control"
+          placeholder="xyz"
+          {...register("organisation", {
+            required: true,
+            pattern: {
+              value: textOnlyRegex,
+              message: "Only letters and spaces are allowed",
+            },
+          })}
+          onChange={handleChange}
+        />
+        <label htmlFor="organisation" className="text-dark">
+          Organisation
+        </label>
+        {errors.organisation && (
+          <p className="text-danger">{errors.organisation.message}</p>
+        )}
+      </div>
 
+      <div className="inputbox2 form-floating">
+        <i className="fa-solid fa-signs-post"></i>
+        <input
+          type="text"
+          id="post"
+          name="post"
+          className="form-control"
+          placeholder="xyz"
+          {...register("post", {
+            required: true,
+            pattern: {
+              value: textOnlyRegex,
+              message: "Only letters and spaces are allowed",
+            },
+          })}
+          onChange={handleChange}
+        />
+        <label htmlFor="post" className="text-dark">
+          Post
+        </label>
+        {errors.post && <p className="text-danger">{errors.post.message}</p>}
+      </div>
             <div className="inputbox2 form-floating">
               <i className="fa-solid fa-calendar-check"></i>
               <input

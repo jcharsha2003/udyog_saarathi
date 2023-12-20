@@ -69,54 +69,76 @@ const Register = () => {
                   <input
                     type="text"
                     id="firstname"
-                    className="form-control "
+                    className="form-control"
                     placeholder="xyz"
                     {...register("firstname", {
                       required: true,
+                      pattern: /^[A-Za-z]+$/i,
                     })}
-                  ></input>
+                  />
                   <label htmlFor="firstname" className="text-dark">
                     First Name
                   </label>
 
                   {errors.firstname?.type === "required" && (
-                    <p className=" text-danger">*enter your first name</p>
+                    <p className="text-danger">* Enter your first name</p>
+                  )}
+                  {errors.firstname?.type === "pattern" && (
+                    <p className="text-danger">
+                      * Only text characters allowed
+                    </p>
                   )}
                 </div>
+
                 {/* middle name */}
                 <div className="inputbox1 form-floating">
                   <i className="fa-regular fa-user"></i>
                   <input
                     type="text"
                     id="middlename"
-                    className="form-control "
+                    className="form-control"
                     placeholder="xyz"
-                    {...register("middlename")}
-                  ></input>
+                    {...register("middlename", {
+                      pattern: /^[A-Za-z]+$/i,
+                    })}
+                  />
                   <label htmlFor="middlename" className="text-dark">
                     Middle Name
                   </label>
+                  {errors.middlename?.type === "pattern" && (
+                    <p className="text-danger">
+                      * Only text characters allowed
+                    </p>
+                  )}
                 </div>
-                {/*  last name*/}
+
+                {/* last name*/}
                 <div className="inputbox1 form-floating">
                   <i className="fa-regular fa-user"></i>
                   <input
                     type="text"
                     id="lastname"
-                    className="form-control "
+                    className="form-control"
                     placeholder="xyz"
                     {...register("lastname", {
                       required: true,
+                      pattern: /^[A-Za-z]+$/i,
                     })}
-                  ></input>
+                  />
                   <label htmlFor="lastname" className="text-dark">
                     Last Name
                   </label>
 
                   {errors.lastname?.type === "required" && (
-                    <p className=" text-danger">*enter your last name</p>
+                    <p className="text-danger">* Enter your last name</p>
+                  )}
+                  {errors.lastname?.type === "pattern" && (
+                    <p className="text-danger">
+                      * Only text characters allowed
+                    </p>
                   )}
                 </div>
+
                 <div className="inputbox1 form-floating">
                   <i className="fa-solid fa-lock"></i>
                   <input
