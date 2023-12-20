@@ -62,7 +62,7 @@ const NavbarMain = (props) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto  ">
-            <Dropdown className="mt-3 mx-2 ms-auto" style={{ zIndex: 1000 }}>
+            <Dropdown className="mt-1 mx-2 ms-auto " style={{ zIndex: 1000 }}>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 <i className="fas fa-wheelchair"></i>
               </Dropdown.Toggle>
@@ -145,7 +145,7 @@ const NavbarMain = (props) => {
                       className="nav-link  "
                       style={{ padding: "1.3rem" }}
                       to="/"
-                    ><FaHome /> 
+                    ><FaHome className="mx-2" /> 
                       Home
                     </Link>
                   </li>
@@ -154,7 +154,7 @@ const NavbarMain = (props) => {
                       className="nav-link   "
                       style={{ padding: "1.3rem" }}
                       to="/login"
-                    ><FaSignInAlt /> 
+                    ><FaSignInAlt className="mx-2" /> 
                       Sign in
                     </Link>
                   </li>
@@ -163,7 +163,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/register"
-                    ><FaSignOutAlt /> 
+                    ><FaSignOutAlt className="mx-2" /> 
                       Sign up
                     </Link>
                   </li>
@@ -184,7 +184,7 @@ const NavbarMain = (props) => {
                       alignItems: 'center',
                     }}
                   >
-                    <FaVolumeUp style={{ marginRight: '5px' }} />
+                    <FaVolumeUp style={{ marginRight: '5px' }} className="mx-2" />
                     Screen reader access
                   </Link>
                 </li>
@@ -193,7 +193,7 @@ const NavbarMain = (props) => {
                       className="nav-link  "
                       style={{ padding: "1.3rem" }}
                       to="/"
-                    ><FaHome /> 
+                    ><FaHome className="mx-2" /> 
                       Home
                     </Link>
                   </li>
@@ -203,7 +203,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/jobs/public"
-                    ><FaFileAlt />
+                    ><FaFileAlt className="mx-2"/>
                       Jobs
                     </Link>
                   </li>
@@ -212,7 +212,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/coursespage"
-                    ><FaBookReader /> 
+                    ><FaBookReader className="mx-2" /> 
                       Courses
                     </Link>
                   </li>
@@ -221,7 +221,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/mockTestCard"
-                    ><FaFileAlt /> 
+                    ><FaFileAlt className="mx-2"/> 
                       Tests
                     </Link>
                   </li>
@@ -230,7 +230,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/users"
-                    ><FaUsers />
+                    ><FaUsers className="mx-2"/>
                       Users
                     </Link>
                   </li>
@@ -240,7 +240,7 @@ const NavbarMain = (props) => {
                       style={{ padding: "1.3rem" }}
                       to="/login"
                       onClick={logoutUser}
-                    ><FaSignOutAlt />
+                    ><FaSignOutAlt className="mx-2" />
                       Sign Out
                     </Link>
                   </li>
@@ -270,7 +270,7 @@ const NavbarMain = (props) => {
                       className="nav-link  "
                       style={{ padding: "1.3rem" }}
                       to="/"
-                    ><FaHome /> 
+                    ><FaHome className="mx-2" /> 
                       Home
                     </Link>
                   </li>
@@ -280,7 +280,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/jobs/public"
-                    ><FaFileAlt />
+                    ><FaFileAlt className="mx-2"/>
                       Jobs
                     </Link>
                   </li>
@@ -289,7 +289,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/coursespage"
-                    ><FaBookReader /> 
+                    ><FaBookReader className="mx-2" /> 
                       Courses
                     </Link>
                   </li>
@@ -298,7 +298,7 @@ const NavbarMain = (props) => {
                       className="nav-link "
                       style={{ padding: "1.3rem" }}
                       to="/mockTestCard"
-                    ><FaFileAlt /> 
+                    ><FaFileAlt className="mx-2"/> 
                       Tests
                     </Link>
                   </li>
