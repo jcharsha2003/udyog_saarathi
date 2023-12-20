@@ -99,23 +99,21 @@ const OTPInput = () => {
             <form>
               <div className="d-flex flex-column space-y-4">
                 <div className="d-flex flex-row align-items-center justify-content-between mx-auto w-100 max-w-xs">
-                  <div className="w-16 h-16 d-block m-auto">
-                    <div className="d-flex flex-row align-items-center justify-content-between mx-auto d-block max-w-xs m-auto ">
-                      {Array.from({ length: 4 }, (_, index) => (
-                        <div key={index} className="w-16 h-16">
-                          <input
-                            maxLength="1"
-                            className="m-2 w-8 h-8 d-flex flex-column align-items-center justify-content-center text-center  outline-none rounded-3 border border-secondary text-sm bg-white focus:bg-light focus:ring-1 ring-primary"
-                            type="text"
-                            name={`otpDigit${index + 1}`}
-                            id={`otpDigit${index + 1}`}
-                            onChange={(e) =>
-                              handleOTPChange(index, e.target.value)
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
+                <div className="w-100 d-flex flex-row align-items-center justify-content-between mx-auto max-w-xs">
+                    {Array.from({ length: 4 }, (_, index) => (
+                      <div key={index} className="w-25">
+                        <input
+                          maxLength="1"
+                          className="m-2 w-100 h-100 d-flex flex-column align-items-center justify-content-center text-center outline-none rounded-3 border border-secondary text-sm bg-white focus:bg-light focus:ring-1 ring-primary"
+                          type="text"
+                          name={`otpDigit${index + 1}`}
+                          id={`otpDigit${index + 1}`}
+                          onChange={(e) =>
+                            handleOTPChange(index, e.target.value)
+                          }
+                        />
+                      </div>
+                    ))}
                   </div>
                   {/* Repeat similar structure for other input fields */}
                 </div>

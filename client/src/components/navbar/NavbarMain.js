@@ -121,7 +121,7 @@ const NavbarMain = (props) => {
               </Dropdown.Menu>
             </Dropdown>
             <ul className="navbar-nav menu ms-auto text-decoration-none">
-              {!userLoginStatus ? (
+              {!userLoginStatus && 
                 <ul className="navbar-nav menu ms-auto text-decoration-none">
                     <li className="nav-item dropdown">
                   {/* Make the screen reader access a link */}
@@ -168,9 +168,10 @@ const NavbarMain = (props) => {
                     </Link>
                   </li>
                 </ul>
-              ) : (
+}
+              {userLoginStatus && role == "admin" && 
                 <ul className="navbar-nav menu ms-auto text-decoration-none">
-                <li className="nav-item dropdown">
+                  <li className="nav-item dropdown">
                   {/* Make the screen reader access a link */}
                   <Link
                     to="/screenReader"  // Redirect to "/screenReader" on click
@@ -224,12 +225,6 @@ const NavbarMain = (props) => {
                       Tests
                     </Link>
                   </li>
-               
-                 
-                </ul>
-              )}
-              {userLoginStatus && role == "admin" && 
-                <ul className="navbar-nav menu ms-auto text-decoration-none">
                   <li className="nav-item dropdown">
                     <Link
                       className="nav-link "
@@ -253,6 +248,60 @@ const NavbarMain = (props) => {
               }
                             {userLoginStatus && role == "employee" && 
                 <ul className="navbar-nav menu ms-auto text-decoration-none">
+                  <li className="nav-item dropdown">
+                  {/* Make the screen reader access a link */}
+                  <Link
+                    to="/screenReader"  // Redirect to "/screenReader" on click
+                    className="nav-link"
+                    style={{
+                      padding: "1.3rem",
+                      border: "none",
+                      background: "none",
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <FaVolumeUp style={{ marginRight: '5px' }} />
+                    Screen reader access
+                  </Link>
+                </li>
+                  <li className="nav-item active">
+                    <Link
+                      className="nav-link  "
+                      style={{ padding: "1.3rem" }}
+                      to="/"
+                    ><FaHome /> 
+                      Home
+                    </Link>
+                  </li>
+
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/jobs/public"
+                    ><FaFileAlt />
+                      Jobs
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/coursespage"
+                    ><FaBookReader /> 
+                      Courses
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link "
+                      style={{ padding: "1.3rem" }}
+                      to="/mockTestCard"
+                    ><FaFileAlt /> 
+                      Tests
+                    </Link>
+                  </li>
                   <li className="nav-item dropdown">
                     <Link
                       className="nav-link "
