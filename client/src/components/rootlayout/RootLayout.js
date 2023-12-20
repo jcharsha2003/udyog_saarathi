@@ -36,11 +36,18 @@ function RootLayout() {
   let [path, setPath] = useState("none");
   useEffect(() => {
     let url = location.pathname.replace("/", "");
-    console.log(url);
-    if (url.length === 0) {
+        // Split the path by '/'
+    let pathArray = url.split('/');
+
+    // Get the last element of the array
+    let lastPart = pathArray[pathArray.length - 1];
+
+    console.log(lastPart); // This will output 'public'
+  
+    if (lastPart.length === 0) {
       setPath("home");
     } else {
-      setPath(url);
+      setPath(lastPart);
     }
   }, [location]);
 
