@@ -3,8 +3,9 @@ import { loginContext } from "../../context/loginContext";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import annyang from "annyang";
-
+import { RecoveryContext } from "../../App";
 import "./Login.css";
+import axios from "axios";
 
 function Login() {
   let navigate = useNavigate();
@@ -53,6 +54,25 @@ function Login() {
       console.error("Annyang not available");
     }
   }, []);
+  const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
+
+  function nagigateToOtp() {
+    if (email) {
+      const OTP = Math.floor(Math.random() * 9000 + 1000);
+      console.log(OTP);
+      setOTP(OTP);
+
+      axios
+        .post("http://localhost:5000/send_recovery_email", {
+          OTP,
+          recipient_email: email,
+        })
+        .then(() => setPage("otp"))
+        .catch(console.log);
+      return;
+    }
+    return alert("Please enter your email");
+  }
 
   return (
     <div className="Login container">
@@ -104,7 +124,16 @@ function Login() {
               <p className=" text-danger">*minimum 4 password word is required</p>
             )}
           </div>
-               <a>forgot your password?</a>
+         
+          <div>
+                  <a
+                    href="#"
+                    onClick={() => nagigateToOtp()}
+                    className="text-gray-800"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
           <button type="submit" id="submit-button" className="button-l d-block m-auto mt-5">
             Login
           </button>
@@ -116,23 +145,3 @@ function Login() {
 
 export default Login;
 
-// _id
-// ObjectId('657dab9b0e316976d498bd87')
-// img
-// "https://firebasestorage.googleapis.com/v0/b/udyog-sarathi.appspot.com/…"
-// organisation
-// "India Exim Bank-Mumbai"
-// post
-// "Manager, Management Trainee"
-// method
-// "Regular"
-// lastDate
-// "01-01-2024"
-// link
-// "https://www.eximbankindia.in/Assets/pdf/careers/Advertisement_for_Exim…"
-// role
-// "public"
-// vacancies
-// "3"
-// appLink
-// "https://ibpsonline.ibps.in/iebmtsep22/"

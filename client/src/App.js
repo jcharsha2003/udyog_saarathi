@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState}from "react";
 import "./App.css";
 import Register from "./components/register/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -26,7 +26,7 @@ import Users from "./components/users/Users"
 
 import UserProfile from "./components/userprofile/UserProfile";
 import OTPInput from "./components/otpInput/OTPInput";
-import Recovered from "./components/recovered/Recovered";
+
 import ScreenReader from "./screenReader/ScreenReader";
 import Reset from "./components/reset/Reset";
 import PaidCourses from "./components/paidCourses/PaidCourses";
@@ -147,9 +147,6 @@ function App() {
           element: <CoursesPage/>,
         },
         {
-          path: "/forgot",
-          element: <Forgot/>,
-        },{
           path: "/otp",
           element: <OTPInput/>,
         },
