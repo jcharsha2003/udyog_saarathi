@@ -149,6 +149,7 @@ function App() {
   ]);
   return (
     <div className="App">
+<<<<<<< HEAD
        <RecoveryContext.Provider
       value={{ page, setPage, otp, setOTP, setEmail, email }}
     >   <RouterProvider router={routerObj} />
@@ -156,6 +157,11 @@ function App() {
     </RecoveryContext.Provider>
    
      
+=======
+      <RecoveryContext.provider  value={{ page, setPage, otp, setOTP, setEmail, email }}>
+      <RouterProvider router={routerObj} />
+      </RecoveryContext.provider>
+>>>>>>> af189c0c38ce2e368b62ba792a0b3d9409a5da1b
       
     </div>
   );
