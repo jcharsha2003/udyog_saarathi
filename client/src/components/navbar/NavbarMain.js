@@ -146,20 +146,7 @@ const NavbarMain = (props) => {
 
             {!userLoginStatus ? (
               <ul className="navbar-nav menu ms-auto text-decoration-none">
-                <li className="nav-item dropdown">
-                  <button
-                    onClick={downloadNVDA}
-                    className="nav-link"
-                    style={{
-                      padding: "1.3rem",
-                      border: "none",
-                      background: "none",
-                    }}
-                  >
-                    <GiSpeaker />
-                    Screen reader access
-                  </button>
-                </li>
+                
                 <li className="nav-item active">
                   <Link
                     className="nav-link  "
@@ -190,20 +177,7 @@ const NavbarMain = (props) => {
               </ul>
             ) : (
               <ul className="navbar-nav menu ms-auto text-decoration-none">
-                <li className="nav-item dropdown">
-                  <button
-                    onClick={downloadNVDA}
-                    className="nav-link"
-                    style={{
-                      padding: "1.3rem",
-                      border: "none",
-                      background: "none",
-                    }}
-                  >
-                    <GiSpeaker />
-                    Screen reader access
-                  </button>
-                </li>
+                
                 <li className="nav-item active">
                   <Link
                     className="nav-link  "

@@ -1,34 +1,79 @@
-// import React from "react";
+import React from "react";
 
-// export default function Recovered() {
-//   return (
-//     <div>
-//       <section class="h-screen">
-//         <div class="px-6 h-full text-gray-800">
-//           <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-//             <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-//               <img
-//                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-//                 class="w-full"
-//                 alt="Sample image"
-//               />
-//             </div>
-//             <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-//               <form>
-//                 <div class="flex flex-row items-center justify-center lg:justify-start">
-//                   <h1 class="text-2xl font-bold mb-0 mr-4">
-//                     Password succesfully set{" "}
-//                   </h1>
-//                 </div>
+import { useNavigate } from "react-router-dom";
+const Reset = () => {
+  const navigate = useNavigate();
 
-//                 <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-//                   <h2>Welcome HOME </h2>
-//                 </div>
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
+  function changePassword() {
+    navigate("/login");
+  }
+
+  return (
+    <div>
+      <section class="bg-gray-50 w-screen">
+  <div class="d-flex flex-column align-items-center justify-content-center px-3 py-4 mx-auto h-100">
+    <div class="w-full p-4 bg-white rounded-lg shadow-md border md:mt-0 sm:max-w-md">
+      <h2 class="mb-1 text-xl font-bold leading-tight text-gray-900">
+        Change Password
+      </h2>
+      <form class="mt-4 space-y-4">
+        <div class="mb-3">
+          <label for="password" class="form-label text-sm font-medium text-gray-900">
+            New Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label text-sm font-medium text-gray-900">
+            Confirm password
+          </label>
+          <input
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            placeholder="••••••••"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-check mb-3">
+          <input
+            id="newsletter"
+            aria-describedby="newsletter"
+            type="checkbox"
+            class="form-check-input"
+            required
+          />
+          <label for="newsletter" class="form-check-label text-sm text-gray-500">
+            I accept the
+            <a
+              href="#"
+              class="font-medium text-primary-600 hover-underline"
+            >
+              Terms and Conditions
+            </a>
+          </label>
+        </div>
+      </form>
+      <button
+        onClick={() => changePassword()}
+        class="btn btn-primary w-100 rounded-lg text-sm px-4 py-2.5"
+      >
+        Reset Password
+      </button>
+    </div>
+  </div>
+</section>
+
+    </div>
+  );
+}
+
+export default Reset

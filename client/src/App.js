@@ -28,11 +28,11 @@ import OTPInput from "./components/otpInput/OTPInput";
 import Recovered from "./components/recovered/Recovered";
 import Reset from "./components/reset/Reset";
 import { createContext } from "react";
-
+export const RecoveryContext = createContext();
 function App() {
   const [page, setPage] = useState("login");
-  const [email, setEmail] = useState();
-  const [otp, setOTP] = useState();
+  const [email, setEmail] = useState("");
+  const [otp, setOTP] = useState("");
   const routerObj = createBrowserRouter([
     {
       path: "/",
@@ -133,6 +133,13 @@ function App() {
         {
           path: "/forgot",
           element: <Forgot/>,
+        },{
+          path: "/otp",
+          element: <OTPInput/>,
+        },
+        {
+          path: "/reset",
+          element: <Reset/>,
         },
        
 
@@ -142,7 +149,14 @@ function App() {
   ]);
   return (
     <div className="App">
-      <RouterProvider router={routerObj} />
+       <RecoveryContext.Provider
+      value={{ page, setPage, otp, setOTP, setEmail, email }}
+    >   <RouterProvider router={routerObj} />
+
+    </RecoveryContext.Provider>
+   
+     
+      
     </div>
   );
 }

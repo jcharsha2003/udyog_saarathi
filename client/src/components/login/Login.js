@@ -3,11 +3,34 @@ import { loginContext } from "../../context/loginContext";
 import { useNavigate ,Link} from "react-router-dom";
 import { useForm } from "react-hook-form";
 import annyang from "annyang";
+import axios from "axios";
+import { RecoveryContext } from "../../App";
 
 import "./Login.css";
 
 function Login() {
   let navigate = useNavigate();
+  const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
+
+  function nagigateToOtp() {
+    console.log(email)
+    if (email) {
+      const OTP = Math.floor(Math.random() * 9000 + 1000);
+      console.log(OTP);
+      setOTP(OTP);
+
+      axios
+        .post("/send_recovery_email", {
+          OTP,
+          recipient_email: email,
+        })
+        .then(() => navigate("/otp"))
+        .catch(console.log);
+      return;
+    }
+    return alert("Please enter your email");
+  }
+ 
   let {
     register,
     handleSubmit,
@@ -108,10 +131,12 @@ function Login() {
               type="email"
               id="email"
               className="form-control "
-              {...register("email", {
-                required: true,
-                minLength: 4,
-              })}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              // {...register("email", {
+              //   required: true,
+              //   minLength: 4,
+              // })}
               placeholder="xyz"
             ></input>
             <label htmlFor="email" className="text-dark">
@@ -149,14 +174,13 @@ function Login() {
               </p>
             )}
           </div>
-          <Link
-                      className="text-primary"
-                      style={{ padding: "1.3rem" }}
-                      to="/forgot"
-                      
-                    >
-                      Forgot Your Password?
-                    </Link>
+          <a
+                    href="#"
+                    onClick={() => nagigateToOtp()}
+                    className="text-gray-800"
+                  >
+                    Forgot password?
+                  </a>
 
           <button type="submit" id="submit-button"
           className="button-l d-block m-auto mt-5">
