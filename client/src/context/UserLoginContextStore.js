@@ -22,7 +22,7 @@ function UserLoginContextStore({children}){
                 // update user login status
                 setUserLoginStatus(true)
                 setError("")
-                sessionStorage.setItem("token",response.data.token)
+                localStorage.setItem("token",response.data.token)
                 setRole(response.data.user.role)
             }
             else{
@@ -35,7 +35,7 @@ function UserLoginContextStore({children}){
 
     }
     const logoutUser=()=>{
-        sessionStorage.clear()
+        localStorage.clear()
         setUserLoginStatus(false)
     }
     return (

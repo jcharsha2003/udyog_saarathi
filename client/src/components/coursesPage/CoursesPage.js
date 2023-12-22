@@ -24,7 +24,7 @@ function CoursesPage() {
             alt="Card image cap"
           ></img>
           <div className="card-body">
-            <h5 className="card-title">Courses</h5>
+            <h5 className="card-title">Free Courses</h5>
            
             <button className="btn btn-primary btn-space p-0 d-block m-auto">
               <Link

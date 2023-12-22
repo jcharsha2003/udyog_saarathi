@@ -67,6 +67,21 @@ jobapp.post(
   })
 );
 
+
+const sendSMS = async () => {
+  try {
+    const response = await axios.post('http://localhost:3001/send-sms', {
+      message: 'You Got the Job!',
+      to: '+919247203883',
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error sending SMS:', error);
+  }
+};
+
+
+
 jobapp.use(exp.json());
 jobapp.post(
   "/add-private",
@@ -95,8 +110,10 @@ jobapp.post(
   // .catch(error => console.error('Error sending message:', error));
          
         sendEmail(key.email,content );
+        sendSMS();
        
       }
+     
       console.log("job created successfully in api")
      
       await jobCollection.insertOne(newJob);
