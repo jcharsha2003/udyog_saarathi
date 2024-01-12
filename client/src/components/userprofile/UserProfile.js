@@ -41,6 +41,7 @@ const UserProfile = () => {
         headers: { Authorization: "Bearer " + token },
       })
       .then((response) => {
+        console.log(response.data.payload)
         if (response.status === 200) {
           setTasks(response.data.payload);
         }

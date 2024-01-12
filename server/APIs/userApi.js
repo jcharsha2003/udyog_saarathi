@@ -179,6 +179,7 @@ userapp.post(
           expiresIn: "1d",
         });
         //send token in response
+        
         response
           .status(200)
           .send({ message: "success", token: jwtToken, user: userOfDB });

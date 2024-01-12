@@ -12,9 +12,11 @@ const verifyToken=(request,response,next)=>{
    }
     // if bearer token is existed, get token
     else{
+        
         const token=bearerToken.split(" ")[1]
        // verify token using secret key
        try{
+       
         jwt.verify(token,"abcdef");
         next();
        }
