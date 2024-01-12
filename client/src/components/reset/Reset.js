@@ -13,26 +13,34 @@ const Reset = () => {
     formState: { errors },
     watch,
     setValue,
+    getValues,
   } = useForm();
 
   const watchedPassword = watch("password", "");
 
   const handleInputChange = (e) => {
-    setValue(e.target.name, e.target.value);
+    const { name, value } = e.target;
+    setValue(name, value);
   };
 
-  const changePassword = async (data) => {
-    console.log(email)
+  const changePassword = async () => {
+    const formData = getValues();
+    console.log(formData)
+   let newPassword= {
+    email: email, // Replace with actual user email
+    password: formData.password,
+  }
+  console.log(newPassword)
     // Simulate API call to change password
     try {
       // Replace the following line with your actual API call
-      const response = await axios.put("/user-api/change-password", {
-        email: {email}, // Replace with actual user email
-        newPassword: data.password,
-      });
+      const response = await axios.put("/user-api/change-password",newPassword);
 
       // Handle API response here
-      console.log("API Response:", response.data);
+      if (response.status === 200) {
+        console.log("API Response:", response.message);
+      }
+    
 
       // Redirect or perform other actions after successful password change
       navigate("/login");

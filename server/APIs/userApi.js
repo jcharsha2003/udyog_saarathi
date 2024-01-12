@@ -65,13 +65,14 @@ userapp.put(
     const userCollection = request.app.get("userCollection");
     
     let newUser = request.body;
-    console.log(newUser)
+   
     let hashedPassword = await bcryptjs.hash(newUser.password, 6);
+   
     newUser.password = hashedPassword;
-    console.log( newUser )
+
     await userCollection.updateOne(
       { email: newUser.email },
-      { $set: { password: newUser.password } }
+      { $set: { password: hashedPassword } }
     );
    
     response.status(200).send({ message: "task has been added successfully" });
