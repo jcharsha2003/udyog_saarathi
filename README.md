@@ -2,6 +2,7 @@
 got to two separate terminals by split and change current directory to 
 ```
 cd client
+npm run build
 npm i
 ```
 ## on the other side terminal run 
