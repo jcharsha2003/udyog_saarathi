@@ -121,6 +121,7 @@ const Public = () => {
   const [sort, setSort] = useState({ sort: "vacancies", order: "desc" });
   const [filterCat, setFilterCat] = useState([]);
   const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
   const [search, setSearch] = useState("");
 
   const getAllJobs = async () => {
@@ -137,7 +138,9 @@ const Public = () => {
             const object = response.data;
 
             setObj(object);
-
+            if (object) {
+              setPageCount(object.pageCount);
+            }
             setData(
               object?.jobs.map((ele) => ({
                 ...ele,
@@ -177,16 +180,28 @@ const Public = () => {
     getAllJobs();
   }, [sort, filterCat, page, search]);
   // main function
-  function filteredData(data, selected) {
-    let filteredProducts = data;
+  function handlePrevious() {
+    setPage((p) => {
+      if (p === 1) return p;
+      return p - 1;
+    });
+  }
 
+  function handleNext() {
+    setPage((p) => {
+      if (p === pageCount) return p;
+      return p + 1;
+    });
+  }
+  function filteredData(data) {
+    let filteredProducts = data;
+    
+    
     // Filtering Input Items
   
 
     // Applying selected filter
-    if (selected) {
-      filteredProducts = filteredProducts.filter(({ cat }) => cat === selected);
-    }
+   
 
     return filteredProducts.map(
       ({
@@ -216,7 +231,7 @@ const Public = () => {
     );
   }
 
-  const result = filteredData(data, selectedCategory);
+  const result = filteredData(data);
 
   return (
     <div className="container">
@@ -419,7 +434,8 @@ const Public = () => {
       )}
       {/* sidebar */}
 
-      <div className="d-flex">
+      <div className="d-flex friends my-2">
+        <div className="wolf d-flex">
         <Sidebar
           handleChange1={handleChange1}
           filterCat={filterCat}
@@ -427,8 +443,14 @@ const Public = () => {
           setFilterCat={(cat) => setFilterCat(cat)}
         
         />
+      
         <Search setSearch={(search) => setSearch(search)} />
-        {/* <Sort sort={sort} setSort={(sort) => setSort(sort)} /> */}
+        </div>
+     
+        <div className=" swing1">
+        <Sort sort={sort} setSort={(sort) => setSort(sort)} />
+        </div>
+        
       </div>
 
       <div>
@@ -436,12 +458,30 @@ const Public = () => {
       </div>
 
       <div className="pt-3 pb-3">
-        <Pagination
-          page={page}
-          limit={obj.limit ? obj.limit : 0}
-          total={obj.total ? obj.total : 0}
-          setPage={(page) => setPage(page)}
-        />
+      <footer className="d-flex">
+        Page: {page}
+        <br />
+        Page count: {pageCount}
+        <br />
+        <button disabled={page === 1} onClick={handlePrevious}>
+          Previous
+        </button>
+        <button disabled={page === pageCount} onClick={handleNext}>
+          Next
+        </button>
+        <select
+          value={page}
+          onChange={(event) => {
+            setPage(event.target.value);
+          }}
+        >
+          {Array(pageCount)
+            .fill(null)
+            .map((_, index) => {
+              return <option key={index}>{index + 1}</option>;
+            })}
+        </select>
+      </footer>
       </div>
     </div>
   );

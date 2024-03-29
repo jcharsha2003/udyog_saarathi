@@ -35,6 +35,7 @@ jobapp.get(
 jobapp.get("/get-jobs/:role", expressAsyncHandler( async (req, res) => {
 	try {
 		const page = parseInt(req.query.page) - 1 || 0;
+
 		const limit = parseInt(req.query.limit) || 7;
     const search = req.query.search || "";
 		let sort = req.query.sort || "vacancies";
@@ -82,16 +83,19 @@ jobapp.get("/get-jobs/:role", expressAsyncHandler( async (req, res) => {
         cat: { $in: [...cat] },
         organisation: { $regex: search, $options: "i" },
       });
-      
+      const pageCount = Math.ceil(total / 7);
+
+  
 		const response = {
       error: false,
 			total,
+      pageCount,
 			page: page + 1,
     cat: catOptions,
 			limit,
 			jobs,
 		};
-console.log(response)
+
 		res.status(200).json(response);
 	} catch (err) {
 		console.log(err);

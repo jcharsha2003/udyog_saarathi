@@ -31,7 +31,7 @@ const Jobs = () => {
       </nav>
       <hr className="font-weight-bolder fs-4 w-75 d-block m-auto  " style={{height:"4px",color:"black"}}></hr>
 
-      <div className="jobs-list mt-3">
+      <div className="jobs-list mt-1">
         <Outlet />
       </div>
     </div>
