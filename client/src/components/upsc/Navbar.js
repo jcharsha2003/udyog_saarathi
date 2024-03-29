@@ -19,7 +19,7 @@ function Navbar() {
             <FaIcons.FaBars /> All Courses
           </Link>
         </div>
-        <nav className={sidebar ? 'nav-menu-u active' : 'nav-menu-u'}>
+        <nav className={sidebar ? 'nav-menu-u active front' : 'nav-menu-u'}>
           <ul className='nav-menu-u-items p-0' onClick={showSidebar}>
             <li className='navbar-u-toggle'>
               <Link to='#' className='menu-bars-close'>

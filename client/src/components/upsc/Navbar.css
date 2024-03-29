@@ -12,12 +12,17 @@
   background: none;
 }
 .menu-bars-close {
+  
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
 }
 
+
+
+
 .nav-menu-u {
+ 
  
   width: 250px;
   height: 100vh;
@@ -36,11 +41,15 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .nav-menu-u.active {
-  margin-top: 4rem;
+margin-top: 0;
+ position: absolute;
   left: 0;
   transition: 350ms;
 }
 
+.front {
+  z-index: 9999; /* Set a high z-index value to bring the nav element to the front */
+}
 .nav-text-u {
   display: flex;
   justify-content: start;

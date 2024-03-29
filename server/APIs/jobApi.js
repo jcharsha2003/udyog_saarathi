@@ -14,6 +14,10 @@ const virtualTwilioNumber = '+12058831914';
 // Send each article as a separate message via Twilio.
 const article = '\nYou Got Job.';
 
+
+
+
+
 jobapp.get(
   "/get-job/:role",
   expressAsyncHandler(async (request, response) => {
@@ -27,6 +31,73 @@ jobapp.get(
     response.status(200).send({ message: "job list", payload: jobObj });
   })
 );
+
+jobapp.get("/get-jobs/:role", expressAsyncHandler( async (req, res) => {
+	try {
+		const page = parseInt(req.query.page) - 1 || 0;
+		const limit = parseInt(req.query.limit) || 7;
+    const search = req.query.search || "";
+		let sort = req.query.sort || "vacancies";
+    let cat = req.query.cat || "All";
+
+		const catOptions = [
+			"A",
+			"B",
+			"C",
+			"D",
+			"E",
+			
+		];
+
+		cat === "All"
+			? (cat = [...catOptions])
+			: (cat = req.query.cat.split(","));
+
+		req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+		
+
+		let sortBy = {};
+		if (sort[1]) {
+			sortBy[sort[0]] = sort[1];
+		} else {
+			sortBy[sort[0]] = "asc";
+		}
+
+
+		
+		
+    const jobCollection = req.app.get("jobCollection");
+
+    
+		const jobs = await jobCollection.find({ role: req.params.role,organisation: { $regex: search, $options: "i" },cat: { $in: cat }})
+    
+    .sort(sortBy)
+    .skip(page * limit)
+    .limit(limit)
+    .toArray();
+
+   
+   
+      const total = await jobCollection.countDocuments({
+        cat: { $in: [...cat] },
+        organisation: { $regex: search, $options: "i" },
+      });
+      
+		const response = {
+      error: false,
+			total,
+			page: page + 1,
+    cat: catOptions,
+			limit,
+			jobs,
+		};
+console.log(response)
+		res.status(200).json(response);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ error: true, message: "Internal Server Error" });
+	}
+}));
 
 jobapp.use(exp.json());
 jobapp.post(
@@ -156,6 +227,40 @@ async function sendEmail(to, content) {
 
 // Example usage
 
+// pagination sorting
+jobapp.put(
+  "/update-jobs",
+
+  expressAsyncHandler(async (request, response) => {
+    const jobCollection = request.app.get("jobCollection");
+  
+    await jobCollection.updateMany(
+      { vacancies: { $type: "string" } }, // Query to find documents with the "vacancies" field as string
+      [
+         {
+            $set: {
+               vacancies: { $toInt: "$vacancies" } // Convert string to integer
+            }
+         }
+      ]
+   );
+
+
+  await jobCollection.updateMany(
+    { }, // Update all documents
+    [
+      {
+        $set: {
+          cat: { $cond: { if: { $eq: [{ $strLenCP: "$cat" }, 1] }, then: ["$cat"], else: { $split: ["$cat", ", "] } } }
+        }
+      }
+    ]
+  )
+    response
+      .status(200)
+      .send({ message: "jobs vacancies type has been updated successfully" });
+  })
+);
 
 
 module.exports = jobapp;

@@ -6,7 +6,7 @@ const Jobs = () => {
   return (
     <div className="jobs-portal">
       <nav  >
-        <ul className="text-decoration-none d-flex justify-content-center list-inline font-weight-bold fs-4 mb-2" >
+        <ul className="text-decoration-none d-flex justify-content-center list-inline font-weight-bold fs-4 mb-1" >
           <li >
             <Link
             id="iron-man"

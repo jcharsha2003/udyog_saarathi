@@ -116,7 +116,7 @@ function RootLayout() {
 
         {/* placeholder */}
         <div
-          className="main pt-5 "
+          className="main "
           style={{
             ...getStyles(),
             fontSize: `${fontSize}px`,

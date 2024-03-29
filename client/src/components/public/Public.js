@@ -6,48 +6,20 @@ import "./Public.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ProgressBar from "react-bootstrap/ProgressBar";
+
 import axios from "axios";
-import { MdOutlineEventSeat } from "react-icons/md";
+import Search from "../Search/index";
+
 import React, { createContext, useContext, useEffect, useState } from "react";
-import styled from "styled-components";
 
-const RatingContext = React.createContext();
+// filtering
 
-const StyledPost = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-`;
-
-const StyledRatingContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const StyledRating = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-
-  &:not(:last-child) {
-    margin-right: 12px;
-  }
-
-  &.post-rating-selected > .post-rating-button,
-  &.post-rating-selected > .post-rating-count {
-    color: #009578;
-  }
-`;
-
-const StyledRatingButton = styled.span`
-  margin-right: 6px;
-  cursor: pointer;
-  color: #555555;
-
-  &:not(.post-rating-selected):hover {
-    color: #000000;
-  }
-`;
+import Navigation from ".././Navigation/Nav";
+import Products from ".././Product/Products";
+import Sort from ".././Sort/index";
+import Sidebar from ".././Sidebar/Sidebar";
+import Card from ".././component/Card";
+import Pagination from ".././Pagination/index";
 
 const Public = () => {
   let [currentUser, error, userLoginStatus, loginUser, logoutUser, role] =
@@ -129,7 +101,7 @@ const Public = () => {
         .then((response) => {
           if (response.status === 201) {
             console.log("Successfully added");
-            getJobs();
+            getAllJobs();
           } else {
             setError(response.data.message);
           }
@@ -144,31 +116,113 @@ const Public = () => {
     }
   };
 
-  const getJobs = () => {
-    axios
-      .get(`/job-api/get-job/public`)
-      .then((response) => {
-        if (response.status === 200) {
-          setData(response.data.payload);
-        } else {
-          setError(response.data.message);
-        }
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+  // sorting and pagenation
+  const [obj, setObj] = useState({});
+  const [sort, setSort] = useState({ sort: "vacancies", order: "desc" });
+  const [filterCat, setFilterCat] = useState([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+
+  const getAllJobs = async () => {
+    try {
+      // &sort=${sort.sort},${	sort.order}
+      const url = `http://localhost:5000/job-api/get-jobs/public?page=${page}&sort=${
+        sort.sort
+      },${sort.order}&cat=${filterCat.toString()}&search=${search}`;
+
+      axios
+        .get(url)
+        .then((response) => {
+          if (response.status === 200) {
+            const object = response.data;
+
+            setObj(object);
+
+            setData(
+              object?.jobs.map((ele) => ({
+                ...ele,
+              }))
+            );
+          } else {
+            setError(response.data.message);
+          }
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  useEffect(() => {
-    getJobs();
-  }, []);
   const textOnlyRegex = /^[A-Za-z\s]+$/;
+
+  // filtering functions
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // ----------- Input Filter -----------
+  const [query, setQuery] = useState("");
+
+
+
+  // ----------- Radio Filtering -----------
+  const handleChange1 = (event) => {
+    setSelectedCategory(event.target.value);
+    console.log(selectedCategory);
+  };
+
+ 
+
+  useEffect(() => {
+    getAllJobs();
+  }, [sort, filterCat, page, search]);
+  // main function
+  function filteredData(data, selected) {
+    let filteredProducts = data;
+
+    // Filtering Input Items
+  
+
+    // Applying selected filter
+    if (selected) {
+      filteredProducts = filteredProducts.filter(({ cat }) => cat === selected);
+    }
+
+    return filteredProducts.map(
+      ({
+        _id,
+        img,
+        organisation,
+        cat,
+        post,
+        vacancies,
+        link,
+        appLink,
+        lastDate,
+      }) => (
+        <Card
+          key={Math.random()}
+          _id={_id}
+          img={img}
+          organisation={organisation}
+          cat={cat}
+          post={post}
+          vacancies={vacancies}
+          link={link}
+          appLink={appLink}
+          lastDate={lastDate}
+        />
+      )
+    );
+  }
+
+  const result = filteredData(data, selectedCategory);
 
   return (
     <div className="container">
-       {/* input for jobs */}
-       {userLoginStatus && role === "admin" && (
-        <div className="container spider-man mb-4 w-50 px-5" py-3>
+      {/* input for jobs */}
+      {userLoginStatus && role === "admin" && (
+        <div className="container spider-man mb-4 w-50 px-5">
           <form onSubmit={handleSubmit(formSubmit)} action="" className="mt-5">
             <div className="inputbox2 form-floating">
               <div className="input-group">
@@ -205,54 +259,55 @@ const Public = () => {
               {errors.img && <p className="text-danger">* Image is required</p>}
             </div>
 
+            <div className="inputbox2 form-floating">
+              <i className="fa-solid fa-sitemap"></i>
+              <input
+                type="text"
+                id="organisation"
+                name="organisation"
+                className="form-control"
+                placeholder="xyz"
+                {...register("organisation", {
+                  required: true,
+                  pattern: {
+                    value: textOnlyRegex,
+                    message: "Only letters and spaces are allowed",
+                  },
+                })}
+                onChange={handleChange}
+              />
+              <label htmlFor="organisation" className="text-dark">
+                Organisation
+              </label>
+              {errors.organisation && (
+                <p className="text-danger">{errors.organisation.message}</p>
+              )}
+            </div>
 
             <div className="inputbox2 form-floating">
-        <i className="fa-solid fa-sitemap"></i>
-        <input
-          type="text"
-          id="organisation"
-          name="organisation"
-          className="form-control"
-          placeholder="xyz"
-          {...register("organisation", {
-            required: true,
-            pattern: {
-              value: textOnlyRegex,
-              message: "Only letters and spaces are allowed",
-            },
-          })}
-          onChange={handleChange}
-        />
-        <label htmlFor="organisation" className="text-dark">
-          Organisation
-        </label>
-        {errors.organisation && (
-          <p className="text-danger">{errors.organisation.message}</p>
-        )}
-      </div>
-
-      <div className="inputbox2 form-floating">
-        <i className="fa-solid fa-signs-post"></i>
-        <input
-          type="text"
-          id="post"
-          name="post"
-          className="form-control"
-          placeholder="xyz"
-          {...register("post", {
-            required: true,
-            pattern: {
-              value: textOnlyRegex,
-              message: "Only letters and spaces are allowed",
-            },
-          })}
-          onChange={handleChange}
-        />
-        <label htmlFor="post" className="text-dark">
-          Post
-        </label>
-        {errors.post && <p className="text-danger">{errors.post.message}</p>}
-      </div>
+              <i className="fa-solid fa-signs-post"></i>
+              <input
+                type="text"
+                id="post"
+                name="post"
+                className="form-control"
+                placeholder="xyz"
+                {...register("post", {
+                  required: true,
+                  pattern: {
+                    value: textOnlyRegex,
+                    message: "Only letters and spaces are allowed",
+                  },
+                })}
+                onChange={handleChange}
+              />
+              <label htmlFor="post" className="text-dark">
+                Post
+              </label>
+              {errors.post && (
+                <p className="text-danger">{errors.post.message}</p>
+              )}
+            </div>
             <div className="inputbox2 form-floating">
               <i className="fa-solid fa-calendar-check"></i>
               <input
@@ -362,105 +417,33 @@ const Public = () => {
           </form>
         </div>
       )}
-      <div className="tab-content">
-        <div id="tab-1" className="tab-pane fade show p-0 active">
-          {/* job apply cards */}
-          {data?.map((job, index) => (
-            <div
-              className="job-item p-4 mb-4 card shadow-lg p-3 mb-5 bg-white rounded"
-              key={index}
-            >
-              <div className="card-body">
-                <div className="row g-4">
-                  <div className="col-sm-12 col-md-8 d-flex align-items-center">
-                    <img
-                      className="flex-shrink-0 img-fluid border rounded"
-                      src={job.img}
-                      alt=""
-                      style={{ width: "80px", height: "80px" }}
-                    />
-                    <div className="text-start ps-4">
-                      <h3 className="mb-3 font-weight-bold">
-                        {job.organisation}
-                      </h3>
-                      <p className="lead">{job.post}</p>
-                      <span className="text-truncate me-3">
-                        <i className="far fa-clock text-primary me-2"></i>
-                        {job.method}
-                      </span>
-                      <span className="text-truncate me-3">
-                        <MdOutlineEventSeat className="me-2" />
-                        {job.vacancies} Vacancies
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                    <div className="d-flex mb-3">
-                      <RatingContext.Provider
-                        value={{ selectedRating, setSelectedRating }}
-                      >
-                        <StyledPost className="post" data-post-id="7712">
-                          <StyledRatingContainer className="post-ratings-container">
-                            {/* Adjust icons as needed */}
-                            <RatingButton icon="thumb_up" />
-                            <RatingButton icon="thumb_down" />
-                          </StyledRatingContainer>
-                        </StyledPost>
-                      </RatingContext.Provider>
-                      <a className="btn btn-success m-2" href={job.link}>
-                        Get Details
-                      </a>
-                      <a className="btn btn-danger m-2" href={job.appLink}>
-                        Apply link
-                      </a>
-                    </div>
-                    <small className="text-truncate">
-                      <i className="far fa-calendar-alt text-primary me-2"></i>
-                      Last Date: {job.lastDate.split("-").reverse().join("-")}
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* sidebar */}
+
+      <div className="d-flex">
+        <Sidebar
+          handleChange1={handleChange1}
+          filterCat={filterCat}
+          cat={obj.cat ? obj.cat : []}
+          setFilterCat={(cat) => setFilterCat(cat)}
+        
+        />
+        <Search setSearch={(search) => setSearch(search)} />
+        {/* <Sort sort={sort} setSort={(sort) => setSort(sort)} /> */}
+      </div>
+
+      <div>
+        <Products result={result} />
+      </div>
+
+      <div className="pt-3 pb-3">
+        <Pagination
+          page={page}
+          limit={obj.limit ? obj.limit : 0}
+          total={obj.total ? obj.total : 0}
+          setPage={(page) => setPage(page)}
+        />
       </div>
     </div>
-  );
-};
-
-const RatingButton = ({ icon }) => {
-  const { selectedRating, setSelectedRating } = useContext(RatingContext);
-
-  const handleRatingClick = async () => {
-    if (selectedRating === icon) {
-      return;
-    }
-
-    setSelectedRating(icon);
-
-    const postId = document.querySelector(".post").dataset.postId;
-
-    const likeOrDislike = icon === "thumb_up" ? "like" : "dislike";
-    // Your API call logic goes here
-    // const response = await fetch(`/posts/${postId}/${likeOrDislike}`);
-    // const body = await response.json();
-    // console.log(body);
-  };
-
-  return (
-    <StyledRating
-      className={`post-rating ${
-        selectedRating === icon ? "post-rating-selected" : ""
-      }`}
-    >
-      <StyledRatingButton
-        className="post-rating-button material-icons"
-        onClick={handleRatingClick}
-      >
-        {icon}
-      </StyledRatingButton>
-    </StyledRating>
   );
 };
 

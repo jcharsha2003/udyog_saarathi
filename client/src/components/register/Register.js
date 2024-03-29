@@ -300,7 +300,7 @@ const Register = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary d-block m-auto">
+            <button type="submit" className="text-center button-86 d-block m-auto">
               Submit
             </button>
           </form>

@@ -92,7 +92,7 @@ function Login() {
 
 
   return (
-    <div className="Login container">
+    <div className="Login container pt-5">
       {error?.length !== 0 && <p className="text-danger display-1"> {error}</p>}
 
       <div className="cat m-auto shadow-lg rounded">
