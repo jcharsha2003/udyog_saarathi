@@ -14,12 +14,12 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 // filtering
 
-import Navigation from ".././Navigation/Nav";
+
 import Products from ".././Product/Products";
 import Sort from ".././Sort/index";
 import Sidebar from ".././Sidebar/Sidebar";
 import Card from ".././component/Card";
-import Pagination from ".././Pagination/index";
+
 
 const Public = () => {
   let [currentUser, error, userLoginStatus, loginUser, logoutUser, role] =
@@ -83,7 +83,7 @@ const Public = () => {
     img: watchedFields.img,
     organisation: watchedFields.organisation,
     post: watchedFields.post,
-    method: watchedFields.method,
+    cat: watchedFields.cat,
     lastDate: watchedFields.lastDate,
     vacancies: Number(watchedFields.vacancies),
     appLink: watchedFields.appLink,
@@ -91,30 +91,7 @@ const Public = () => {
     role: watchedFields.role,
   };
 
-  let formSubmit = async () => {
-    try {
-      const formData = getValues(); // Get the entire form data
-
-      // You can access the form data directly, no need for modifiedFormData
-      axios
-        .post(`/job-api/add-public`, formData)
-        .then((response) => {
-          if (response.status === 201) {
-            console.log("Successfully added");
-            getAllJobs();
-          } else {
-            setError(response.data.message);
-          }
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
-
-      reset(); // Reset the form after submission
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
+  
 
   // sorting and pagenation
   const [obj, setObj] = useState({});
@@ -155,6 +132,30 @@ const Public = () => {
         });
     } catch (err) {
       console.log(err);
+    }
+  };
+  let formSubmit = async () => {
+    try {
+      let formData = getValues(); // Get the entire form data
+      formData = { ...formData, role: "public"};
+      // You can access the form data directly, no need for modifiedFormData
+      axios
+        .post(`/job-api/add-public`, formData)
+        .then((response) => {
+          if (response.status === 201) {
+            console.log(response.data.message);
+            getAllJobs();
+          } else {
+            setError(response.data.message);
+          }
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+
+      reset(); // Reset the form after submission
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -327,18 +328,18 @@ const Public = () => {
               <i className="fa-solid fa-calendar-check"></i>
               <input
                 type="text"
-                id="method"
+                id="cat"
                 className="form-control "
                 placeholder="xyz"
-                name="method"
-                value={watchedFields.method}
-                onChange={(e) => setValue("method", e.target.value)}
-                {...register("method", { required: true })}
+                name="cat"
+                value={watchedFields.cat}
+                onChange={(e) => setValue("cat", e.target.value)}
+                {...register("cat", { required: true })}
               />
-              <label htmlFor="method" className="text-dark">
-                Job type
+              <label htmlFor="cat" className="text-dark">
+                Category
               </label>
-              {errors.method && (
+              {errors.cat && (
                 <p className="text-danger">* Job type is required</p>
               )}
             </div>
